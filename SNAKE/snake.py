@@ -95,12 +95,6 @@ while running:
 
     screen.fill(WHITE)
 
-    #Score and level
-    score_text = font.render("Score: " + str(score), True, BLACK)
-    level_text = font.render("Level: " + str(level), True, BLACK)
-    screen.blit(score_text, (WIDTH - score_text.get_width() - 10, 10))
-    screen.blit(level_text, (WIDTH - level_text.get_width() - 10, score_text.get_height() + 10))
-
     #Draw the circle if the fruit has not been eaten
     if fruit_eaten == False: pygame.draw.circle(screen, RED, (fruit[0] + 5, fruit[1] + 5), 5)
 
@@ -110,6 +104,12 @@ while running:
         if body[0] == end[0] and body[1] == end[1]:
             pygame.draw.rect(screen, DARK_GREEN, pygame.Rect(body[0], body[1], 10, 10))
         else: pygame.draw.rect(screen, GREEN, pygame.Rect(body[0], body[1], 10, 10))
+
+    # Score and level
+    score_text = font.render("Score: " + str(score), True, BLACK)
+    level_text = font.render("Level: " + str(level), True, BLACK)
+    screen.blit(score_text, (WIDTH - score_text.get_width() - 10, 10))
+    screen.blit(level_text, (WIDTH - level_text.get_width() - 10, score_text.get_height() + 10))
 
     #Move the snake
     if dir == "down":
@@ -150,10 +150,10 @@ while running:
 
     #Checking if the game has been ended
     head_check = snake[-1]
-    if head_check[1] < -10 or head_check[0] < -10 or head_check[1] > HEIGHT or head_check[0] > WIDTH:
+    if head_check[0] < 0 or head_check[0] >= WIDTH or head_check[1] < 0 or head_check[1] >= HEIGHT:
         running = False
 
-    if initial_moves == 2:
+    if initial_moves >= 2:
         for body in snake[:-1]:
             if body[0] == head_check[0] and body[1] == head_check[1]:
                 running = False
